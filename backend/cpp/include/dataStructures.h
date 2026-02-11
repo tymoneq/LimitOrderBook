@@ -1,10 +1,9 @@
 #ifndef DATASTRUCTURES
 #define DATASTRUCTURES
 
-
-
-
 // The code snippet defines a struct named `Order` that represents an order in a trading system. Each `Order` object contains the following members:
+struct Limit;
+
 struct Order
 {
     int idNumber;
@@ -18,13 +17,12 @@ struct Order
     Limit *parentLimit;
 };
 
-
 // The `struct Limit` defines a data structure that represents a limit order in a trading system. Each `Limit` object contains the following members:
 struct Limit
 {
-    int limitPrice;
-    int size;
-    int totalVolume;
+    int limitPrice = -1;
+    int size = 0;
+    int totalVolume = 0;
     Limit *parent;
     Limit *leftChild;
     Limit *rightChild;
@@ -40,9 +38,5 @@ struct Book
     Limit *lowestSell;
     Limit *highestBuy;
 };
-
-
-
-
 
 #endif
