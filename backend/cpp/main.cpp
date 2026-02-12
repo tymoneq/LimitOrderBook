@@ -1,5 +1,6 @@
 #include "include/dataStructures.h"
-#include "include/functions.h"
+#include "include/adding_to_tree.h"
+#include "include/init_and_free.h"
 #include <iostream>
 #include <vector>
 
