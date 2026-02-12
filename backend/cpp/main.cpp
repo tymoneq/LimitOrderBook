@@ -17,9 +17,9 @@ int main()
         std::cout << "i: " << i << "\n";
         Order *o1 = new Order{i, rand() % 2, rand() % 50, rand() % 100, 1, 1, nullptr, nullptr, nullptr};
         add_order(o1, LimitOrderBook);
-
-        
     }
+
+    free_memory(LimitOrderBook);
 
     return 0;
 }

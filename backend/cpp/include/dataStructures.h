@@ -12,8 +12,8 @@ struct Order
     int limit;
     int entryTime;
     int eventTime;
-    Order *nextOrder;
-    Order *prevOrder;
+    Order *nextOrder = nullptr;
+    Order *prevOrder = nullptr;
     Limit *parentLimit;
 };
 

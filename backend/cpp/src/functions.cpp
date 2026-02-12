@@ -19,8 +19,6 @@ int init_book(Book *limitOrderBook)
     if (!limitOrderBook)
         return -1;
 
-    limitOrderBook->highestBuy = new Limit;
-    limitOrderBook->lowestSell = new Limit;
     limitOrderBook->buyTree = new Limit;
     limitOrderBook->sellTree = new Limit;
 
@@ -149,6 +147,50 @@ Limit *add_tree_node(Order *newOrder, Limit *parent)
 
 int free_memory(Book *limitOrderBook)
 {
+    limitOrderBook->highestBuy = nullptr;
+    limitOrderBook->lowestSell = nullptr;
+
+    free_tree(limitOrderBook->buyTree);
+    free_tree(limitOrderBook->sellTree);
+
+    delete limitOrderBook->highestBuy;
+    delete limitOrderBook->lowestSell;
+
+    delete limitOrderBook;
 
     return 0;
+}
+
+void free_tree(Limit *node)
+{
+
+    if (node == nullptr)
+        return;
+
+    if (node->leftChild != nullptr)
+        free_tree(node->leftChild);
+    if (node->rightChild != nullptr)
+        free_tree(node->rightChild);
+
+    node->parent = nullptr;
+    node->leftChild = nullptr;
+    node->rightChild = nullptr;
+
+    free_list(node->headerOrder);
+
+    node->headerOrder = nullptr;
+    node->tailOrder = nullptr;
+
+    delete node;
+}
+
+void free_list(Order *order)
+{
+
+    Order *next_order = order->nextOrder;
+
+    delete order;
+
+    if (next_order != nullptr)
+        free_list(next_order);
 }
