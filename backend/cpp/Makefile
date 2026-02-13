@@ -1,2 +1,2 @@
 all:
-	g++ main.cpp src/init_and_free.cpp src/remove_order_from_tree.cpp src/adding_to_tree.cpp -std=c++17 -Wshadow -Wall -o main -fsanitize=address,leak,undefined,float-divide-by-zero,float-cast-overflow -g -fsignaling-nans -fnon-call-exceptions -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC 
+	g++ main.cpp src/init_and_free.cpp src/remove_order_from_tree.cpp src/adding_to_tree.cpp src/matching_orders.cpp -std=c++17 -Wshadow -Wall -o main -fsanitize=address,leak,undefined,float-divide-by-zero,float-cast-overflow -g -fsignaling-nans -fnon-call-exceptions -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC 

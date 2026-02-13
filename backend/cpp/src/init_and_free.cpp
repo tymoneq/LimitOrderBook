@@ -19,6 +19,8 @@ int init_book(Book *limitOrderBook)
 
     limitOrderBook->buyTree = new Limit;
     limitOrderBook->sellTree = new Limit;
+    limitOrderBook->lowestSell = nullptr;
+    limitOrderBook->highestBuy = nullptr;
 
     return 0;
 }
@@ -61,6 +63,9 @@ void free_tree(Limit *node)
 
 void free_list(Order *order)
 {
+
+    if (order == nullptr)
+        return;
 
     Order *next_order = order->nextOrder;
 
