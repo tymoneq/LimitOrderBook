@@ -1,5 +1,6 @@
 #ifndef DATASTRUCTURES
 #define DATASTRUCTURES
+#include <ctime>
 
 // The code snippet defines a struct named `Order` that represents an order in a trading system. Each `Order` object contains the following members:
 struct Limit;
@@ -10,8 +11,8 @@ struct Order
     bool buyOrSell;
     int shares;
     int limit;
-    int entryTime;
-    int eventTime;
+    time_t entryTime;
+    time_t eventTime;
     Order *nextOrder = nullptr;
     Order *prevOrder = nullptr;
     Limit *parentLimit;

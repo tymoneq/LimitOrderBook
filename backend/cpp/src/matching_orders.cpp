@@ -1,5 +1,6 @@
 #include "../include/dataStructures.h"
 #include "../include/matching_orders.h"
+#include "../include/writing_orders_to_file.h"
 #include <math.h>
 #include <iostream>
 
@@ -26,7 +27,8 @@ void fill_order(Order *newOrder, Limit *bestLimit)
     {
         int shares_count = std::min(bestLimit->headerOrder->shares, newOrder->shares);
 
-        // save transaction to the file
+        write_to_file(newOrder, bestLimit->headerOrder);
+
         newOrder->shares -= shares_count;
         bestLimit->totalVolume -= shares_count;
         if (shares_count == bestLimit->headerOrder->shares)
@@ -34,6 +36,8 @@ void fill_order(Order *newOrder, Limit *bestLimit)
             bestLimit->size--;
             Order *filling_order = bestLimit->headerOrder;
             bestLimit->headerOrder = filling_order->nextOrder;
+            if (bestLimit->headerOrder != nullptr)
+                bestLimit->headerOrder->prevOrder = nullptr;
 
             delete filling_order;
         }
