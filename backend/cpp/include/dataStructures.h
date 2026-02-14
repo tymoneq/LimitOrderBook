@@ -22,6 +22,7 @@ struct Order
 struct Limit
 {
     int balance = -1;
+    int height = 0;
     int limitPrice = -1;
     int size = 0;
     int totalVolume = 0;

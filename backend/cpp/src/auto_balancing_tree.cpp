@@ -1,11 +1,10 @@
 #include "../include/auto_balancing_tree.h"
 #include <math.h>
-#include <iostream>
 
 /**
  * The function `calculate_balances` iterates through a tree structure, updating balances and
  * performing rotations if necessary to maintain balance factors within a specified range.
- * 
+ *
  * @param node The `node` parameter in the `calculate_balances` function seems to be a pointer to a
  * structure or class named `Limit`. This function is likely part of a tree data structure
  * implementation, possibly an AVL tree or a similar self-balancing binary search tree.
@@ -24,7 +23,7 @@ void calculate_balances(Limit *node)
             if (node->balance > 1 && (node->leftChild != nullptr && (node->leftChild->balance == 0 || node->leftChild->balance == 1)))
                 left_rotation(node);
 
-            else if (node->balance < -1 && (node->rightChild != nullptr && (node->rightChild->balance == 0 || node->rightChild->balance == 1)))
+            else if (node->balance < -1 && (node->rightChild != nullptr && (node->rightChild->balance == 0 || node->rightChild->balance == -1)))
                 right_rotation(node);
 
             else if (node->balance > 1 && (node->leftChild != nullptr && node->leftChild->balance == -1))
@@ -39,7 +38,7 @@ void calculate_balances(Limit *node)
 /**
  * The function calculates the balance factor of a node in a binary tree based on its left and right
  * children.
- * 
+ *
  * @param node The `node` parameter in the `get_balance` function is a pointer to a `Limit` struct.
  * This struct likely represents a node in a binary tree data structure, as it contains pointers to
  * left and right child nodes, as well as a `balance` field.
@@ -47,15 +46,23 @@ void calculate_balances(Limit *node)
 void get_balance(Limit *node)
 {
     int balance = 0;
+    int height = 0;
     if (node->leftChild == nullptr)
-        balance -= 1;
+    {
+        balance = 0;
+        height = 0;
+    }
     else
-        balance += node->leftChild->balance;
+        balance = height = node->leftChild->height;
 
     if (node->rightChild == nullptr)
-        balance += 1;
+        height = std::max(height, 0);
     else
-        balance -= node->rightChild->balance;
+    {
+        balance -= node->rightChild->height;
+        height = std::max(height, node->rightChild->height);
+    }
+    node->height = height + 1;
 
     node->balance = balance;
 }
@@ -68,7 +75,6 @@ void get_balance(Limit *node)
  */
 void left_rotation(Limit *node)
 {
-
     Limit *new_root = node->leftChild;
 
     new_root->parent = node->parent;
@@ -102,7 +108,6 @@ void left_rotation(Limit *node)
  */
 void right_rotation(Limit *node)
 {
-
     Limit *new_root = node->rightChild;
 
     new_root->parent = node->parent;
@@ -128,14 +133,11 @@ void right_rotation(Limit *node)
 
 void left_right_rotation(Limit *node)
 {
-
-    std::cout << "LR\n";
     left_rotation(node->rightChild);
     right_rotation(node);
 }
 void right_left_rotation(Limit *node)
 {
-    std::cout << "RL\n";
     right_rotation(node->leftChild);
     left_rotation(node);
 }
