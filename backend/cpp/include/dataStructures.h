@@ -25,11 +25,11 @@ struct Limit
     int limitPrice = -1;
     int size = 0;
     int totalVolume = 0;
-    Limit *parent;
-    Limit *leftChild;
-    Limit *rightChild;
-    Order *headerOrder;
-    Order *tailOrder;
+    Limit *parent = nullptr;
+    Limit *leftChild = nullptr;
+    Limit *rightChild = nullptr;
+    Order *headerOrder = nullptr;
+    Order *tailOrder = nullptr;
 };
 
 // The `struct Book` is defining a data structure that represents a book in a trading system. It contains pointers to different limits and orders within the book. Here's a breakdown of each member:

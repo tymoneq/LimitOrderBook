@@ -3,6 +3,20 @@
 #include <math.h>
 
 
+/**
+ * The function `find_matching_orders` checks if a new order matches the best limit order and fills the
+ * order if conditions are met.
+ * 
+ * @param newOrder `newOrder` is a pointer to an `Order` struct, which likely contains information
+ * about a new order being processed in a trading system.
+ * @param bestLimit `bestLimit` is a pointer to a `Limit` struct that contains information about the
+ * best limit price for an order.
+ * 
+ * @return The function `find_matching_orders` returns an integer value. If the condition `bestLimit ==
+ * nullptr` is true, it returns 1. If the new order matches the best limit price based on the buyOrSell
+ * condition, it fills the order and returns 1 if there are still shares left in the new order;
+ * otherwise, it returns 0.
+ */
 int find_matching_orders(Order *newOrder, Limit *bestLimit)
 {
 
@@ -19,6 +33,18 @@ int find_matching_orders(Order *newOrder, Limit *bestLimit)
         return 1;
     return 0;
 }
+
+
+/**
+ * The function `fill_order` processes a new order by matching it with the best available limit order
+ * and updating the order details accordingly.
+ * 
+ * @param newOrder The `newOrder` parameter is a pointer to an `Order` object representing a new order
+ * that needs to be filled.
+ * @param bestLimit BestLimit is a pointer to a Limit struct that contains information about the best
+ * limit order in the order book, including the total volume available at that limit and a linked list
+ * of orders at that limit.
+ */
 void fill_order(Order *newOrder, Limit *bestLimit)
 {
 

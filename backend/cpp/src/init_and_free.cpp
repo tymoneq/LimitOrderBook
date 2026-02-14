@@ -1,6 +1,5 @@
 #include "../include/init_and_free.h"
 
-
 /**
  * The function initializes a limit order book structure by setting its pointers to null.
  *
@@ -53,7 +52,8 @@ void free_tree(Limit *node)
     node->leftChild = nullptr;
     node->rightChild = nullptr;
 
-    free_list(node->headerOrder);
+    if (node->headerOrder != nullptr)
+        free_list(node->headerOrder);
 
     node->headerOrder = nullptr;
     node->tailOrder = nullptr;

@@ -2,44 +2,70 @@
 #include <math.h>
 #include <iostream>
 
+/**
+ * The function `calculate_balances` iterates through a tree structure, updating balances and
+ * performing rotations if necessary to maintain balance factors within a specified range.
+ * 
+ * @param node The `node` parameter in the `calculate_balances` function seems to be a pointer to a
+ * structure or class named `Limit`. This function is likely part of a tree data structure
+ * implementation, possibly an AVL tree or a similar self-balancing binary search tree.
+ */
 void calculate_balances(Limit *node)
 {
 
     while (node != nullptr)
     {
-        int balance = 0;
-        if (node->leftChild == nullptr)
-            balance -= 1;
-        else
-            balance += node->leftChild->balance;
+        get_balance(node);
 
-        if (node->rightChild == nullptr)
-            balance += 1;
-        else
-            balance -= node->rightChild->balance;
-
-        if (std::abs(balance) > 1)
+        if (std::abs(node->balance) > 1)
         {
 
-            std::cout << "Rotating\n";
             // left rotation
-            if (balance > 1 && (node->leftChild != nullptr && (node->leftChild->balance == 0 || node->leftChild->balance == 1)))
+            if (node->balance > 1 && (node->leftChild != nullptr && (node->leftChild->balance == 0 || node->leftChild->balance == 1)))
                 left_rotation(node);
 
-            else if (balance < -1 && (node->rightChild != nullptr && (node->rightChild->balance == 0 || node->rightChild->balance == 1)))
+            else if (node->balance < -1 && (node->rightChild != nullptr && (node->rightChild->balance == 0 || node->rightChild->balance == 1)))
                 right_rotation(node);
 
-            else
-                node = node->parent;
+            else if (node->balance > 1 && (node->leftChild != nullptr && node->leftChild->balance == -1))
+                right_left_rotation(node);
+            else if (node->balance < -1 && (node->rightChild != nullptr && node->rightChild->balance == 1))
+                left_right_rotation(node);
         }
-        else
-        {
-            node->balance = balance;
-            node = node->parent;
-        }
+        node = node->parent;
     }
 }
 
+/**
+ * The function calculates the balance factor of a node in a binary tree based on its left and right
+ * children.
+ * 
+ * @param node The `node` parameter in the `get_balance` function is a pointer to a `Limit` struct.
+ * This struct likely represents a node in a binary tree data structure, as it contains pointers to
+ * left and right child nodes, as well as a `balance` field.
+ */
+void get_balance(Limit *node)
+{
+    int balance = 0;
+    if (node->leftChild == nullptr)
+        balance -= 1;
+    else
+        balance += node->leftChild->balance;
+
+    if (node->rightChild == nullptr)
+        balance += 1;
+    else
+        balance -= node->rightChild->balance;
+
+    node->balance = balance;
+}
+
+/**
+ * The function performs a left rotation operation on a binary tree node.
+ *
+ * @param node The `left_rotation` function you provided performs a left rotation operation on a binary
+ * tree node.
+ */
 void left_rotation(Limit *node)
 {
 
@@ -61,8 +87,19 @@ void left_rotation(Limit *node)
 
     node->parent = new_root;
     new_root->rightChild = node;
+
+    get_balance(node);
+    get_balance(new_root);
 }
 
+/**
+ * The above function performs a right rotation operation on a binary tree node.
+ *
+ * @param node The `right_rotation` function performs a right rotation operation on a binary tree node.
+ * The `node` parameter represents the node around which the rotation is performed. During the
+ * rotation, the right child of the `node` becomes the new root of the subtree, and the `node` becomes
+ * the left
+ */
 void right_rotation(Limit *node)
 {
 
@@ -84,4 +121,21 @@ void right_rotation(Limit *node)
 
     node->parent = new_root;
     new_root->leftChild = node;
+
+    get_balance(node);
+    get_balance(new_root);
+}
+
+void left_right_rotation(Limit *node)
+{
+
+    std::cout << "LR\n";
+    left_rotation(node->rightChild);
+    right_rotation(node);
+}
+void right_left_rotation(Limit *node)
+{
+    std::cout << "RL\n";
+    right_rotation(node->leftChild);
+    left_rotation(node);
 }
