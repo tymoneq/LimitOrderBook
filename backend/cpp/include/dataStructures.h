@@ -21,6 +21,7 @@ struct Order
 // The `struct Limit` defines a data structure that represents a limit order in a trading system. Each `Limit` object contains the following members:
 struct Limit
 {
+    int balance = -1;
     int limitPrice = -1;
     int size = 0;
     int totalVolume = 0;

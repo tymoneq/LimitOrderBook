@@ -1,7 +1,6 @@
 #include "../include/adding_to_tree.h"
-#include "../include/dataStructures.h"
 #include "../include/matching_orders.h"
-#include <iostream>
+#include "../include/auto_balancing_tree.h"
 
 /**
  * The function `add_order` adds a new order to a book's buy or sell tree based on the order type and
@@ -38,6 +37,9 @@ int add_order(Order *newOrder, Book *limitOrderedBook)
 
             limitOrderedBook->highestBuy = node;
         }
+
+        while (limitOrderedBook->buyTree->parent != nullptr)
+            limitOrderedBook->buyTree = limitOrderedBook->buyTree->parent;
     }
     // sellOrder
     else
@@ -57,6 +59,9 @@ int add_order(Order *newOrder, Book *limitOrderedBook)
 
             limitOrderedBook->lowestSell = node;
         }
+
+        while (limitOrderedBook->sellTree->parent != nullptr)
+            limitOrderedBook->sellTree = limitOrderedBook->sellTree->parent;
     }
     return 0;
 }
@@ -86,7 +91,7 @@ Limit *add_order_to_tree(Order *newOrder, Limit *tree)
         tree->parent = nullptr;
         tree->leftChild = nullptr;
         tree->rightChild = nullptr;
-        return 0;
+        return tree;
     }
 
     Limit *parent = nullptr;
@@ -110,9 +115,11 @@ Limit *add_order_to_tree(Order *newOrder, Limit *tree)
             parent->leftChild = tree;
     }
     else
-    {
         add_order_to_list(newOrder, tree);
-    }
+
+    // calculate balance
+    calculate_balances(tree);
+
     return tree;
 }
 /**
