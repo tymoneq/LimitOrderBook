@@ -23,7 +23,7 @@ int add_order(Order *newOrder, Book *limitOrderedBook)
     // buyOrder
     if (newOrder->buyOrSell == true)
     {
-        int code = find_matching_orders(newOrder, limitOrderedBook->lowestSell);
+        int code = find_matching_orders(newOrder, limitOrderedBook->lowestSell, limitOrderedBook);
 
         if (code == 0)
             return 0;
@@ -45,7 +45,7 @@ int add_order(Order *newOrder, Book *limitOrderedBook)
     else
     {
 
-        int code = find_matching_orders(newOrder, limitOrderedBook->highestBuy);
+        int code = find_matching_orders(newOrder, limitOrderedBook->highestBuy, limitOrderedBook);
 
         if (code == 0)
             return 0;

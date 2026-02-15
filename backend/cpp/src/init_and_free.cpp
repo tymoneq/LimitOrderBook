@@ -48,6 +48,11 @@ void free_tree(Limit *node)
     if (node->rightChild != nullptr)
         free_tree(node->rightChild);
 
+    free_tree_node(node);
+}
+
+void free_tree_node(Limit *node)
+{
     node->parent = nullptr;
     node->leftChild = nullptr;
     node->rightChild = nullptr;
@@ -60,7 +65,6 @@ void free_tree(Limit *node)
 
     delete node;
 }
-
 void free_list(Order *order)
 {
 

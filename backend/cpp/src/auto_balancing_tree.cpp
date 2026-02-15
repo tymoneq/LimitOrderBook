@@ -45,6 +45,8 @@ void calculate_balances(Limit *node)
  */
 void get_balance(Limit *node)
 {
+    if (node == nullptr)
+        return;
     int balance = 0;
     int height = 0;
     if (node->leftChild == nullptr)
