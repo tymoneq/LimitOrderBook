@@ -1,7 +1,7 @@
 #ifndef BALANCING
 #define BALANCING
 
-#include "dataStructures.h"
+#include "../../include/dataStructures.h"
 void rotate(Limit *node);
 void get_balance(Limit *node);
 void left_rotation(Limit *node);

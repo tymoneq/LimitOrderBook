@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(Limit_Order_Book CXX)
 
 set(INIT
-    init/scr/init_and_free.cpp)
+    init_and_free/src/init_and_free.cpp)
 set(LOGGING
     logging/src/writing_orders_to_file.cpp)
 set(ORDER_LOGIC
