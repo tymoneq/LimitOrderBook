@@ -20,15 +20,19 @@
  */
 int add_order(Order *newOrder, Book *limitOrderedBook)
 {
+    std::cout << "add_order\n";
     // buyOrder
     if (newOrder->buyOrSell == true)
     {
         int code = find_matching_orders(newOrder, limitOrderedBook->lowestSell, limitOrderedBook);
+        std::cout << "found matching\n";
 
         if (code == 0)
             return 0;
 
         auto node = add_order_to_tree(newOrder, limitOrderedBook->buyTree);
+
+        std::cout << "added to tree\n";
 
         if (limitOrderedBook->highestBuy == nullptr || (limitOrderedBook->highestBuy != nullptr && limitOrderedBook->highestBuy->limitPrice < newOrder->limit))
         {
@@ -46,11 +50,13 @@ int add_order(Order *newOrder, Book *limitOrderedBook)
     {
 
         int code = find_matching_orders(newOrder, limitOrderedBook->highestBuy, limitOrderedBook);
-
+        std::cout << "found matching\n";
         if (code == 0)
             return 0;
 
         auto node = add_order_to_tree(newOrder, limitOrderedBook->sellTree);
+
+        std::cout << "added to tree\n";
 
         if (limitOrderedBook->lowestSell == nullptr || (limitOrderedBook->lowestSell != nullptr && limitOrderedBook->lowestSell->limitPrice > newOrder->limit))
         {
@@ -95,9 +101,17 @@ Limit *add_order_to_tree(Order *newOrder, Limit *tree)
     }
 
     Limit *parent = nullptr;
+    std::cout << &tree << "\n";
+    std::cout << &tree->leftChild << "\n";
+    std::cout << &tree->rightChild << "\n";
+
+    std::cout << &tree->leftChild->rightChild << "\n";
+
+    std::cout << &tree->leftChild->leftChild << "\n";
 
     while (tree != nullptr && tree->limitPrice != newOrder->limit)
     {
+
         parent = tree;
         if (newOrder->limit < tree->limitPrice)
             tree = tree->leftChild;
@@ -118,7 +132,10 @@ Limit *add_order_to_tree(Order *newOrder, Limit *tree)
         add_order_to_list(newOrder, tree);
 
     // calculate balance
-    calculate_balances(tree);
+    std::cout << "before rotating\n";
+    rotate(tree);
+
+    std::cout << "After rotating\n";
 
     return tree;
 }

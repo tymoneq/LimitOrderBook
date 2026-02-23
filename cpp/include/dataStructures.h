@@ -1,6 +1,7 @@
 #ifndef DATASTRUCTURES
 #define DATASTRUCTURES
 #include <ctime>
+#include <iostream>
 
 // The code snippet defines a struct named `Order` that represents an order in a trading system. Each `Order` object contains the following members:
 struct Limit;

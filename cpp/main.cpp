@@ -1,7 +1,6 @@
 #include "include/dataStructures.h"
-#include "include/adding_to_tree.h"
-#include "include/init_and_free.h"
-#include "include/matching_orders.h"
+#include "tree_logic/include/adding_to_tree.h"
+#include "init_and_free/include/init_and_free.h"
 #include <iostream>
 #include <vector>
 
@@ -12,10 +11,11 @@ int main()
     init_book(LimitOrderBook);
 
     // sample input data
-    const int N = 1000;
+    const int N = 100;
 
     for (int i = 0; i < N; i++)
     {
+        std::cout << i << "\n";
         Order *o1 = new Order{i, rand() % 2, 10 * i + (rand() % 50), rand() % 100 + 10, 1, 1, nullptr, nullptr, nullptr};
         add_order(o1, LimitOrderBook);
     }

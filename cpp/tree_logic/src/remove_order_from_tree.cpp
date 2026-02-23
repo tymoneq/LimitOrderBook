@@ -2,6 +2,7 @@
 #include "../include/init_and_free.h"
 #include "../include/auto_balancing_tree.h"
 
+
 Limit *find_new_node(Limit *node)
 {
     // go left
@@ -25,21 +26,25 @@ Limit *find_new_node(Limit *node)
         return nullptr;
 }
 
+void move_tree_pointers(Limit *node, Limit *new_node)
+{
+    new_node->leftChild = node->leftChild;
+    new_node->rightChild = node->rightChild;
+
+    if (node->leftChild != nullptr)
+        node->leftChild->parent = new_node;
+
+    if (node->rightChild != nullptr)
+        node->rightChild->parent = new_node;
+
+    free_tree_node(node);
+}
+
 void remove_node(Limit *node, Book *limitOrderBook)
 {
 
     Limit *new_node = find_new_node(node);
-    // leaf
-    if (new_node == nullptr)
-    {
-        free_tree_node(node);
-        return;
-    }
-
-    Limit *prev_parent = new_node->parent;
-
     Limit *parent_node = node->parent;
-    new_node->parent = parent_node;
 
     if (parent_node != nullptr)
     {
@@ -57,6 +62,28 @@ void remove_node(Limit *node, Book *limitOrderBook)
             limitOrderBook->sellTree = new_node;
     }
 
+    // leaf
+    if (new_node == nullptr)
+    {
+        free_tree_node(node);
+        rotate(new_node);
+        return;
+    }
+
+    Limit *prev_parent = new_node->parent;
+    new_node->parent = parent_node;
+
+    if (prev_parent == node)
+    {
+        move_tree_pointers(node, new_node);
+        return;
+    }
+
+    if (prev_parent->leftChild == new_node)
+        prev_parent->leftChild = nullptr;
+    else
+        prev_parent->rightChild = nullptr;
+
     // changing left / right son of new node
     if (new_node->leftChild != nullptr)
     {
@@ -69,15 +96,10 @@ void remove_node(Limit *node, Book *limitOrderBook)
         new_node->rightChild->parent = prev_parent;
     }
 
-    new_node->leftChild = node->leftChild;
-    new_node->rightChild = node->rightChild;
+    move_tree_pointers(node, new_node);
 
-    if (node->leftChild != nullptr)
-        node->leftChild->parent = new_node;
+    std::cout << "DEBUGGING\n";
+    std::cout << &prev_parent << " " << prev_parent->limitPrice << "\n";
 
-    if (node->rightChild != nullptr)
-        node->rightChild->parent = new_node;
-
-    free_tree_node(node);
-    calculate_balances(prev_parent);
+    rotate(prev_parent);
 }

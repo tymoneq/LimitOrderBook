@@ -1,6 +1,7 @@
 #include "../include/auto_balancing_tree.h"
 #include <math.h>
 
+
 /**
  * The function `calculate_balances` iterates through a tree structure, updating balances and
  * performing rotations if necessary to maintain balance factors within a specified range.
@@ -9,7 +10,7 @@
  * structure or class named `Limit`. This function is likely part of a tree data structure
  * implementation, possibly an AVL tree or a similar self-balancing binary search tree.
  */
-void calculate_balances(Limit *node)
+void rotate(Limit *node)
 {
 
     while (node != nullptr)
@@ -49,6 +50,10 @@ void get_balance(Limit *node)
         return;
     int balance = 0;
     int height = 0;
+
+    std::cout << "get_balance\n";
+    std::cout << &node << " " << node->limitPrice << "\n";
+
     if (node->leftChild == nullptr)
     {
         balance = 0;
