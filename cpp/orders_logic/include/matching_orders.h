@@ -3,7 +3,7 @@
 
 #include "../../include/dataStructures.h"
 
-int find_matching_orders(Order *newOrder, Limit *bestLimit, Book *limitOrderBook);
-void fill_order(Order *newOrder, Limit *bestLimit, Book *limitOrderBook);
+int find_matching_orders(Order *newOrder, Limit *bestLimit, bool buyOrSell);
+int fill_order(Order *newOrder, Limit *bestLimit);
 
 #endif
