@@ -8,8 +8,8 @@ struct Limit;
 
 struct Order
 {
-    int idNumber;
     bool buyOrSell;
+    int idNumber;
     int shares;
     int limit;
     time_t entryTime;

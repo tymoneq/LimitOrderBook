@@ -78,3 +78,15 @@ void free_list(Order *order)
     if (next_order != nullptr)
         free_list(next_order);
 }
+void free_list_element(Order *order)
+{
+    Order *prev_order = order->prevOrder;
+    Order *next_order = order->nextOrder;
+
+    if (prev_order != nullptr)
+        prev_order->nextOrder = next_order;
+    if (next_order != nullptr)
+        next_order->prevOrder = prev_order;
+
+    delete order;
+}
